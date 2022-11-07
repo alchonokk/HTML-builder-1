@@ -10,18 +10,13 @@ rl.prompt();
 
 rl.on('line', (line) => {
   if (line === 'exit'){
+    console.log('Goodbye!');
     process.exit();
   } else {
     fs.appendFile(outFilePath, `${line}\n`, () => {});
     console.log('Please, write your message here:');
   }   
-});
-
-process.on('exit', () => {
-  console.log('Goodbye!');
-});
-
-process.on('SIGINT', () => {
+}).on('close', () => {
   console.log('Goodbye!');
   process.exit();
 });
