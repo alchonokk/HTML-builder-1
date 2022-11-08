@@ -37,31 +37,31 @@ const dirrComponents=path.join(__dirname,'components')
 const doHTML = async () => {
   try { 
     const files = await readdir(dirrComponents,{withFileTypes: true});
-    fs1.readFile(path.join(__dirname,'template.html'),'utf-8',function (err,contentHtml) {
+    fs1.readFile(path.join(__dirname,'template.html'), 'utf-8', function (err, contentHtml) {
       if (err) {
         return console.log(err);
       }
       let str = contentHtml.toString();
-      for (const file of files)
-      if (file.isFile()) {
-        let extn=path.extname(file.name);
-        let nameFile = path.basename(file.name,extn);
-        if (extn==='.html'){
+      for (const file of files) {
+        if (file.isFile()) {
+          let extn=path.extname(file.name);
+          let nameFile = path.basename(file.name,extn);
+          if (extn==='.html'){
+            let st='{{'+ nameFile +'}}';
             
-        let st='{{'+ nameFile +'}}';;
-        
-         fs1.readFile(path.join(dirrComponents, file.name),'utf-8',function (err,content) {
-          if (err) {
-            return console.log(err, '57');
-          }
-            const regexp = new RegExp(st);
-            str=str.replace(regexp,content);
-            fs1.writeFile(dirr2, str, function(err) {
+            fs1.readFile(path.join(dirrComponents, file.name),'utf-8',function (err,content) {
               if (err) {
-                  return console.log(err);
-              } 
-            })
-          }) 
+                return console.log(err, '57');
+              }
+              const regexp = new RegExp(st);
+              str=str.replace(regexp, content);
+              fs1.writeFile(dirr2, str, function(err) {
+                if (err) {
+                    return console.log(err);
+                } 
+              })
+            }) 
+          }
         }
       }
     })
